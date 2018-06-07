@@ -44,6 +44,66 @@ public class rabittmqController {
             return "发布消息失败。。。。。。。。";
         }
     }
+    @RequestMapping("/sendpsfanout") //ack
+    public String sendMessagepsfanout(String message){
+        try{
+            sendMessage.sendMessagePsfanout(message);
+            System.out.println("---------"+message+"-------------");
+            return message;
+        }catch (Exception e){
+            e.printStackTrace();
+            return "发布消息失败。。。。。。。。";
+        }
+    }
+
+
+
+    @RequestMapping("/senddirectG") //ack
+    public String sendMessagedirectG(String message){
+        try{
+            sendMessage.sendGreendirect(message);
+            System.out.println("---------"+message+"-------------");
+            return message;
+        }catch (Exception e){
+            e.printStackTrace();
+            return "发布消息失败。。。。。。。。";
+        }
+    }
+    @RequestMapping("/senddirectB") //ack
+    public String sendMessagedirectB(String message){
+        try{
+            sendMessage.sendBlackdirect(message);
+            System.out.println("---------"+message+"-------------");
+            return message;
+        }catch (Exception e){
+            e.printStackTrace();
+            return "发布消息失败。。。。。。。。";
+        }
+    }
+    @RequestMapping("/senddirectO") //ack
+    public String sendMessagedirectO(String message){
+        try{
+            sendMessage.sendOrangedirect(message);
+            System.out.println("---------"+message+"-------------");
+            return message;
+        }catch (Exception e){
+            e.printStackTrace();
+            return "发布消息失败。。。。。。。。";
+        }
+    }
+
+
+
+    @RequestMapping("/sendtopicA")
+    public String sendMessagetopicA(String message) {
+        sendMessage.sendMessagetopicA(message);
+        return "send1 ok";
+    }
+    @RequestMapping("/sendtopicB")
+    public String sendMessagetopicB(String message) {
+        sendMessage.sendMessagetopicB(message);
+        return "send2 ok";
+    }
 
 
 }

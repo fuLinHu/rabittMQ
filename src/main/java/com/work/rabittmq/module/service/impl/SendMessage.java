@@ -19,6 +19,14 @@ public class SendMessage {
     @Value("${queue.name.helloack}")
     private String queueHelloack;
 
+    @Value("${exchange.fanout.name}")
+    private String exchangefanout;
+    @Value("${exchange.direct.name}")
+    private String exchangedirect;
+    @Value("${exchange.topic.name}")
+    private String exchangetopic;
+
+
     public void sendMessage(String message){
         try {
             Thread.sleep(1000L);
@@ -54,5 +62,39 @@ public class SendMessage {
             e.printStackTrace();
         }
 
+    }
+    public void sendMessagePsfanout(String message) {
+        logger.debug("Sender : " + message);
+         //参数   1.交换机名字   2.第二个参数表示routing key  3.发送信息
+        this.rabbitTemplate.convertAndSend(exchangefanout,"", message);
+    }
+
+    public void sendOrangedirect(String message) {
+        String context = "hi, i am message orange"+"  "+message;
+        logger.info("Sender : " + context);
+        //参数   1.交换机名字   2.第二个参数表示routing key  3.发送信息
+        this.rabbitTemplate.convertAndSend(exchangedirect, "orange", context);
+    }
+    public void sendBlackdirect(String message) {
+        String context = "hi, i am messages black"+"  "+message;
+        logger.debug("Sender : " + context);
+        this.rabbitTemplate.convertAndSend(exchangedirect, "black", context);
+    }
+    public void sendGreendirect(String message) {
+        String context = "hi, i am messages green"+"  "+message;
+        logger.debug("Sender : " + context);
+        this.rabbitTemplate.convertAndSend(exchangedirect, "green", context);
+    }
+
+
+    public void sendMessagetopicA(String message) {
+        String context = "hi, i am message sendMessagetopicA   "+message;
+        logger.info("Sender : " + context);
+        this.rabbitTemplate.convertAndSend(exchangetopic, "topic.message", context);
+    }
+    public void sendMessagetopicB(String message) {
+        String context = "hi, i am messages sendMessagetopicB   "+message;
+        logger.info("Sender : " + context);
+        this.rabbitTemplate.convertAndSend(exchangetopic, "topic.messages", context);
     }
 }
